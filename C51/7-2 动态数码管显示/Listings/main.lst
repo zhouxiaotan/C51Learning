@@ -1,0 +1,220 @@
+C51 COMPILER V9.54   MAIN                                                                  06/13/2024 22:42:54 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include "regx52.h"
+   2          
+   3          void Delay(unsigned int xms)            //@12.000MHz
+   4          {
+   5   1              unsigned char i, j;
+   6   1              while(xms--)
+   7   1              {
+   8   2                      i = 2;
+   9   2                      j = 239;
+  10   2                      do
+  11   2                      {
+  12   3                              while (--j);
+  13   3                      } while (--i);
+  14   2              }       
+  15   1      }
+  16          
+  17          unsigned int smg_value[] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d,
+  18          0x7d, 0x07, 0x7f, 0x6f, 0x77, 0x7c, 0x39, 0x5e, 0x79, 0x71};
+  19          
+  20          void Nixie(unsigned int id)
+  21          {
+  22   1          switch(id)
+  23   1          {
+  24   2              case 1: P3_6 = 1; P3_5 = 0; P3_4 = 0; break;
+  25   2              case 2: P3_6 = 1; P3_5 = 0; P3_4 = 1; break;
+  26   2              case 3: P3_6 = 1; P3_5 = 1; P3_4 = 0; break;
+  27   2              case 4: P3_6 = 1; P3_5 = 1; P3_4 = 1; break;
+  28   2              case 5: P3_6 = 0; P3_5 = 0; P3_4 = 0; break;
+  29   2              case 6: P3_6 = 0; P3_5 = 0; P3_4 = 1; break;
+  30   2              case 7: P3_6 = 0; P3_5 = 1; P3_4 = 0; break;
+  31   2              case 8: P3_6 = 0; P3_5 = 1; P3_4 = 1; break;
+  32   2              default: break;
+  33   2          }
+  34   1      }
+  35          
+  36          void main()
+  37          {
+  38   1          unsigned int i,j;
+  39   1              while(1)
+  40   1          {
+  41   2              for(j = 0; j < 10000; j++)
+  42   2              {
+  43   3                  for(i = 1;i<50;i++)
+  44   3                  {
+  45   4                      Nixie(4);
+  46   4                      P0 = j > 1000 ? smg_value[j/1000%10] : 0x00;
+  47   4                      Delay(1);
+  48   4                      P0 = 0x00;
+  49   4                      
+  50   4                      Nixie(3);
+  51   4                      P0 = j > 100 ? smg_value[j/100%10] : 0x00;
+  52   4                      Delay(1);
+  53   4                      P0 = 0x00;
+  54   4      
+C51 COMPILER V9.54   MAIN                                                                  06/13/2024 22:42:54 PAGE 2   
+
+  55   4                      Nixie(2);
+  56   4                      P0 = j > 10 ? smg_value[j/10%10] : 0x00;
+  57   4                      Delay(1);
+  58   4                      P0 = 0x00;
+  59   4                  
+  60   4                      Nixie(1);
+  61   4                      P0 = smg_value[j%10];        
+  62   4                      Delay(1);
+  63   4                      P0 = 0x00;
+  64   4                  }
+  65   3              }
+  66   2              }
+  67   1      }
+  68          
+  69          
+  70          
+  71          
+  72          //#define HC_A P3_4
+  73          //#define HC_B P3_5
+  74          //#define HC_C P3_6
+  75          
+  76          //unsigned int smgduan[17]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,
+  77          //                                      0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};//??0~F??
+  78          
+  79          
+  80          //void delayus(unsigned int i)    // 10*i us
+  81          //{
+  82          //      while(i--);     
+  83          //}
+  84          
+  85          //void Select(unsigned int Pos)  // ??,?????????
+  86          //{
+  87          //      switch(Pos)      
+  88          //    {
+  89          //        case(1):
+  90          //            HC_A=0;HC_B=0;HC_C=1; break;
+  91          //        case(2):
+  92          //            HC_A=1;HC_B=0;HC_C=1; break;
+  93          //        case(3):
+  94          //            HC_A=0;HC_B=1;HC_C=1; break;
+  95          //        case(4):
+  96          //            HC_A=1;HC_B=1;HC_C=1; break;
+  97          //        case(5):
+  98          //            HC_A=0;HC_B=0;HC_C=0; break;
+  99          //        case(6):
+ 100          //            HC_A=1;HC_B=0;HC_C=0; break;
+ 101          //        case(7):
+ 102          //            HC_A=0;HC_B=1;HC_C=0; break;
+ 103          //        case(8):
+ 104          //            HC_A=1;HC_B=1;HC_C=0; break;
+ 105          //    }
+ 106          //              
+ 107          //}
+ 108          
+ 109          //void show_two(unsigned long num)
+ 110          //{             
+ 111          //    // 数字越大显示的越慢
+ 112          //    unsigned int j = 0;
+ 113          //    for(j = 0; j<100;j++)
+ 114          //    {    
+ 115          //        if(num >= 10000000)
+ 116          //        {
+C51 COMPILER V9.54   MAIN                                                                  06/13/2024 22:42:54 PAGE 3   
+
+ 117          //            Nixie(8);
+ 118          //            P0=smgduan[num/10000000%10];
+ 119          //            delayus(100); 
+ 120          //            P0=0x00;
+ 121          //        }
+ 122          //        
+ 123          //        if(num >= 1000000)
+ 124          //        {
+ 125          //            Nixie(7);
+ 126          //            P0=smgduan[num/1000000%10];
+ 127          //            delayus(100); 
+ 128          //            P0=0x00;
+ 129          //        }
+ 130          //        
+ 131          //        if(num >= 100000)
+ 132          //        {
+ 133          //            Nixie(6);
+ 134          //            P0=smgduan[num/100000%10];
+ 135          //            delayus(100); 
+ 136          //            P0=0x00;
+ 137          //        }
+ 138          
+ 139          //        if(num >= 10000)
+ 140          //        {
+ 141          //            Nixie(5);
+ 142          //            P0=smgduan[num/10000%10];
+ 143          //            delayus(100); 
+ 144          //            P0=0x00;
+ 145          //        }
+ 146          
+ 147          //        if(num >= 1000)
+ 148          //        {
+ 149          //            Nixie(4);
+ 150          //            P0=smgduan[num/1000%10];
+ 151          //            delayus(100); 
+ 152          //            P0=0x00;
+ 153          //        }
+ 154          
+ 155          
+ 156          //        if(num >= 100)
+ 157          //        {
+ 158          //            Nixie(3);
+ 159          //            P0=smgduan[(num/100)%10];
+ 160          //            delayus(100); 
+ 161          //            P0=0x00;
+ 162          //        }
+ 163          
+ 164          //        if(num >= 10)
+ 165          //        {
+ 166          //            Nixie(2);
+ 167          //            P0=smgduan[(num/10)%10];
+ 168          //            delayus(100); 
+ 169          //            P0=0x00;
+ 170          //        }
+ 171          
+ 172          //        Nixie(1);
+ 173          //        P0=smgduan[num%10];
+ 174          //        delayus(100); 
+ 175          //        P0=0x00;
+ 176          //    }
+ 177          //}
+ 178          
+C51 COMPILER V9.54   MAIN                                                                  06/13/2024 22:42:54 PAGE 4   
+
+ 179          //void main()
+ 180          //{
+ 181          //    unsigned long i = 0, j = 0;
+ 182          //    while(1)
+ 183          //    {
+ 184          //        for(i = 0; i<100000000;i++)
+ 185          //        {
+ 186          //            show_two(i);
+ 187          //        }
+ 188          //    }
+ 189          
+ 190          //}
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    359    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     32       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
