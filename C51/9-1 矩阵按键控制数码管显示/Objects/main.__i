@@ -1,0 +1,1 @@
+"main.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(.\Hardware;.\Delay;C:\Keil_v5\C51\INC\Atmel) DEBUG OBJECTEXTEND PRINT(.\Listings\main.lst) OBJECT(.\Objects\main.obj)

@@ -1,0 +1,60 @@
+C51 COMPILER V9.54   NIXIE                                                                 06/14/2024 22:59:00 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE NIXIE
+OBJECT MODULE PLACED IN .\Objects\Nixie.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Hardware\Nixie.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Hardware;.\Delay;C:\K
+                    -eil_v5\C51\INC\Atmel) DEBUG OBJECTEXTEND PRINT(.\Listings\Nixie.lst) OBJECT(.\Objects\Nixie.obj)
+
+line level    source
+
+   1          #include "NiXie.h"
+   2          #include "regx52.h"
+   3          #include "Delay.h"
+   4          
+   5          unsigned int smg_value[] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d,
+   6          
+   7           0x7d, 0x07, 0x7f, 0x6f, 0x77, 0x7c, 0x39, 0x5e, 0x79, 0x71};
+   8          
+   9          
+  10          void NiXie_init()
+  11          {
+  12   1              P0 = 0x00;
+  13   1      }
+  14          
+  15          void NiXie(unsigned char id,unsigned char value)
+  16          {
+  17   1              if (value > 15)
+  18   1              {
+  19   2                      value = 0;
+  20   2              }
+  21   1              switch (id)
+  22   1              {
+  23   2                      case 1:P3_6 = 1, P3_5 = 0; P3_4 = 0;  break;
+  24   2                      case 2:P3_6 = 1, P3_5 = 0; P3_4 = 1;  break;
+  25   2                      case 3:P3_6 = 1, P3_5 = 1; P3_4 = 0;  break;
+  26   2                      case 4:P3_6 = 1, P3_5 = 1; P3_4 = 1;  break;
+  27   2                      case 5:P3_6 = 0, P3_5 = 0; P3_4 = 0;  break;
+  28   2                      case 6:P3_6 = 0, P3_5 = 0; P3_4 = 1;  break;
+  29   2                      case 7:P3_6 = 0, P3_5 = 1; P3_4 = 0;  break;
+  30   2                      case 8:P3_6 = 0, P3_5 = 1; P3_4 = 1;  break;
+  31   2                      default:break;
+  32   2              }
+  33   1              P0 = smg_value[value];
+  34   1      //      Delay(20);
+  35   1      //      P0 = 0x00;
+  36   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    114    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     32    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
