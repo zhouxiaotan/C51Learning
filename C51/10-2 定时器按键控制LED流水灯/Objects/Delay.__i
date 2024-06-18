@@ -1,0 +1,1 @@
+"Delay\Delay.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(..\10-2 定时器按键控制LED流水灯;.\Delay) DEBUG OBJECTEXTEND PRINT(.\Listings\Delay.lst) OBJECT(.\Objects\Delay.obj)
